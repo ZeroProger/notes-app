@@ -1,5 +1,5 @@
-import { axiosClassic } from '@/api/interceptors'
-import { NotesApiUrls } from '@/config/api.config'
+import { axiosClassic } from '../api/interceptors'
+import { NotesApiUrls } from '../config/api.config'
 import { NewNoteVM, NoteVM } from 'types'
 
 export const NotesService = {

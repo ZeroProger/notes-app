@@ -1,0 +1,39 @@
+.noteCard {
+	@apply bg-backgroundLight p-4 flex flex-col gap-3 rounded-xl;
+
+	&.miniCard {
+		@apply min-w-[400px];
+	}
+
+	.title {
+		@apply text-xl;
+	}
+
+	.description {
+		@apply text-lg;
+	}
+
+	.priority {
+		@apply mb-1;
+
+		span {
+			@apply text-sm border-2 py-0 px-2 rounded-md;
+
+			&:global(.priority0) {
+				@apply border-primary;
+			}
+
+			&:global(.priority1) {
+				@apply border-yellow-700;
+			}
+
+			&:global(.priority2) {
+				@apply border-error;
+			}
+		}
+	}
+
+	.editBtn {
+		@apply btn-dark-blue py-1 text-center;
+	}
+}

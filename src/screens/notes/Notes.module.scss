@@ -1,0 +1,20 @@
+@import '../../styles/mixins.scss';
+
+.notes {
+	@apply grid grid-cols-4 gap-4;
+
+	@include md(xl, 'max') {
+		@apply grid grid-cols-3 gap-4;
+	}
+
+	@include md(lg, 'max') {
+		@apply grid grid-cols-2 gap-4;
+	}
+
+	@include md(md, 'max') {
+		@apply grid grid-cols-1 gap-4;
+	}
+
+	.note {
+	}
+}

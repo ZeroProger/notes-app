@@ -1,5 +1,5 @@
 export const API_URL = `${process.env.APP_URL}`
-export const API_SERVER_URL = `${process.env.APP_SERVER_URL}`
+export const API_SERVER_URL = `${process.env.REACT_APP_API_URL}`
 
 export const NotesApiUrls = {
 	getNotes() {

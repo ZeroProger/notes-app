@@ -12,9 +12,9 @@ export type NoteVM = {
 export type NewNoteVM = Pick<NoteVM, 'title' | 'description' | 'priority'>
 
 export enum EPriority {
-	Low,
-	Medium,
-	High,
+	Низкий,
+	Средний,
+	Высокий,
 }
 
 export type ProblemDetails = Nullable<{

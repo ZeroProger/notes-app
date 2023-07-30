@@ -1,3 +1,5 @@
+import { UpdateNote } from '../../../screens/notes/update/UpdateNote'
+
 export function UpdateNotePage() {
-	return <div>UpdateNotePage</div>
+	return <UpdateNote />
 }

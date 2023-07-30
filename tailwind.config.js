@@ -11,7 +11,7 @@ const secondaryGray = '#006B6A'
 const secondaryBlue = '#59BAB8'
 const secondaryDirt = '#bb855d'
 const background = '#192024'
-const backgroundLight = 'var(--nextui-colors-gray200)'
+const backgroundLight = '#2B2F31'
 const lightGray = 'var(--light-gray)'
 const textLightGray = 'var(--nextui-colors-text)'
 const error = '#f74343'
@@ -181,13 +181,15 @@ module.exports = {
 						backgroundColor: lightGray,
 					},
 				},
-				'.btn-secondary-gray': {
+				'.btn-dark-blue': {
 					backgroundColor: secondaryBlue,
 					color: '#e6e6e6',
 					borderRadius: '0.65rem',
 					padding: '13px 15px',
 					wordWrap: 'normal',
 					whiteSpace: 'nowrap',
+					display: 'inline-block',
+					width: 'max-content',
 					fontSize: '1.125rem !important',
 					minWidth: 'auto',
 					transition: 'background-color .3s ease-in-out',

@@ -1,3 +1,5 @@
+import { Notes } from '../../screens/notes/Notes'
+
 export function NotesPage() {
-	return <div>NotesPage</div>
+	return <Notes />
 }

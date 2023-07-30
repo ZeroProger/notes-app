@@ -1,0 +1,30 @@
+$media: (
+	xs: 420px,
+	sm: 660px,
+	md: 768px,
+	lg: 980px,
+	xl: 1280px,
+	2xl: 1536px,
+	3xl: 1920px,
+);
+
+@mixin md($breakpoint, $max: 'min') {
+	@each $breakpoints, $size in $media {
+		@if $breakpoint==$breakpoints {
+			@if $max == 'max' {
+				@media screen and (max-width: $size) {
+					@content;
+				}
+			}
+			@if $max == 'min' {
+				@media screen and (min-width: $size) {
+					@content;
+				}
+			}
+		}
+	}
+}
+
+@function hexToRGBString($hexColor, $alpha) {
+	@return inspect(rgba($hexColor, $alpha));
+}
