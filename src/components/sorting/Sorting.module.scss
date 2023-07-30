@@ -1,0 +1,25 @@
+@import '../../styles/mixins.scss';
+
+.container {
+	@apply mb-4 flex flex-col items-start gap-4;
+
+	@include md(lg, 'max') {
+		@apply flex-row;
+	}
+
+	.heading {
+		@apply text-xl min-w-[150px] border-b-2 pb-3;
+
+		@include md(lg, 'max') {
+			@apply border-b-0 pb-0;
+		}
+	}
+
+	.sorts {
+		@apply flex flex-row gap-4;
+
+		@include md(lg, 'max') {
+			@apply border-l-2 pl-5;
+		}
+	}
+}

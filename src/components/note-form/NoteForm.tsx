@@ -9,20 +9,32 @@ import { useCreateNote, useUpdateNote } from '../../queries/notes'
 import { useNavigate } from 'react-router-dom'
 import { NotesRouteUrls } from '../../config/url.config'
 import { toast } from 'react-toastify'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
+	const formSchema = z.object({
+		title: z.string({ required_error: 'Укажите заголовок' }).min(5, {
+			message: 'Заголовок должен быть минимум 5 символов в длину.',
+		}),
+		description: z.string().optional(),
+		priority: z.string({ required_error: 'Укажите приоритет' }),
+	})
+
+	type ZodNewNoteVM = z.infer<typeof formSchema>
+
 	const {
 		handleSubmit,
 		control,
 		reset,
 		formState: { errors },
-	} = useForm<NewNoteVM>()
+	} = useForm<ZodNewNoteVM>({ mode: 'onBlur', resolver: zodResolver(formSchema) })
 
 	const createMutation = useCreateNote()
 	const updateMutation = useUpdateNote()
 	const navigate = useNavigate()
 
-	const onSubmit: SubmitHandler<NewNoteVM> = (data) => {
+	const onSubmit: SubmitHandler<ZodNewNoteVM> = (data) => {
 		if (defaultNote) {
 			updateMutation.mutateAsync(
 				{
@@ -59,21 +71,21 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
 			<div className={styles.field}>
-				<Label htmlFor="title" className="mb-2" required>
+				<Label htmlFor="title" className="mb-2" required error={errors.title}>
 					Заголовок
 				</Label>
 				<Controller
 					name="title"
 					control={control}
 					defaultValue={defaultNote?.title}
-					rules={{ required: true }}
+					rules={{ required: { value: true, message: 'Обязательно' } }}
 					render={({ field }) => (
-						<Input {...field} type="text" id="title" placeholder="Заголовок" />
+						<Input {...field} type="text" id="title" placeholder="Заголовок" error={errors.title} />
 					)}
 				/>
 			</div>
 			<div className={styles.field}>
-				<Label htmlFor="description" className="mb-2">
+				<Label htmlFor="description" className="mb-2" error={errors.description}>
 					Описание
 				</Label>
 				<Controller
@@ -81,21 +93,32 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					control={control}
 					defaultValue={defaultNote?.description}
 					rules={{ required: false }}
-					render={({ field }) => <Textarea {...field} id="description" placeholder="Описание" />}
+					render={({ field }) => (
+						<Textarea
+							{...field}
+							id="description"
+							placeholder="Описание"
+							error={errors.description}
+						/>
+					)}
 				/>
 			</div>
 			<div className={styles.field}>
-				<Label className="mb-4" required>
+				<Label className="mb-4" required error={errors.priority}>
 					Приоритет
 				</Label>
 				<div className={styles.radioGroup}>
 					<Controller
 						name="priority"
 						control={control}
-						defaultValue={defaultNote?.priority}
+						defaultValue={String(defaultNote?.priority)}
 						rules={{ required: true }}
 						render={({ field }) => (
-							<RadioGroup onValueChange={field.onChange} defaultValue={String(field.value)}>
+							<RadioGroup
+								onValueChange={field.onChange}
+								defaultValue={String(field.value)}
+								error={errors.priority}
+							>
 								<div className={styles.radioItem}>
 									<RadioGroupItem
 										value="0"
@@ -128,7 +151,11 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 				</div>
 			</div>
 			<div className={styles.field}>
-				<Input type="submit" value="Изменить" className={styles.submitBtn} />
+				<Input
+					type="submit"
+					value={defaultNote ? 'Изменить' : 'Создать'}
+					className={styles.submitBtn}
+				/>
 			</div>
 		</form>
 	)

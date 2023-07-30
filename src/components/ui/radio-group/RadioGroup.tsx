@@ -5,17 +5,25 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { FieldError } from 'react-hook-form'
+
+type Props = { error?: FieldError }
 
 const RadioGroup = React.forwardRef<
 	React.ElementRef<typeof RadioGroupPrimitive.Root>,
-	React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
+	React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & Props
+>(({ className, error, ...props }, ref) => {
 	return (
-		<RadioGroupPrimitive.Root
-			className={twMerge(clsx('grid gap-2', className))}
-			{...props}
-			ref={ref}
-		/>
+		<>
+			<RadioGroupPrimitive.Root
+				className={twMerge(clsx('grid gap-2', className))}
+				{...props}
+				ref={ref}
+			/>
+			{error?.message?.length && error?.message.length > 0 && (
+				<div className="text-sm text-error mt-3">{error.message}</div>
+			)}
+		</>
 	)
 })
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
