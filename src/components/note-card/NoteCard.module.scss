@@ -1,5 +1,5 @@
 .noteCard {
-	@apply bg-backgroundLight p-4 flex flex-col gap-3 rounded-xl;
+	@apply bg-backgroundLight p-4 flex flex-col gap-3 rounded-xl h-full;
 
 	&.miniCard {
 		@apply min-w-[400px];
@@ -11,6 +11,8 @@
 
 	.description {
 		@apply text-lg;
+
+		flex: 1 0 auto;
 	}
 
 	.priority {
@@ -33,7 +35,15 @@
 		}
 	}
 
-	.editBtn {
-		@apply btn-dark-blue py-1 text-center;
+	.actions {
+		@apply flex flex-row justify-between;
+
+		.editBtn {
+			@apply btn-dark-blue py-1 text-center;
+		}
+
+		.deleteBtn {
+			@apply btn-error py-1 text-center;
+		}
 	}
 }

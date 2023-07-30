@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom'
-import { EPriority } from '../../types'
 import styles from './Notes.module.scss'
-import { useNotes } from './useNotes'
+import { useFetchNotes } from '../../queries/notes'
 import { NotesRouteUrls } from '../../config/url.config'
 import { NoteCard } from '../../components/note-card/NoteCard'
 import { Loading } from '../../components/loading/Loading'
 
 export function Notes() {
-	const { data: notes, isLoading, isError } = useNotes()
+	const { data: notes, isLoading, isError } = useFetchNotes()
 
 	if (isLoading) return <Loading />
 

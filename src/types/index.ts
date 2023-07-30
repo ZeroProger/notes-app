@@ -9,7 +9,11 @@ export type NoteVM = {
 	priority: number
 }
 
-export type NewNoteVM = Pick<NoteVM, 'title' | 'description' | 'priority'>
+export type NewNoteVM = {
+	title: string
+	description?: string
+	priority: number
+}
 
 export enum EPriority {
 	Низкий,

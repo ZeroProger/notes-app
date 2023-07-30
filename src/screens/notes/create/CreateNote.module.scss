@@ -1,2 +1,43 @@
 .container {
+	@apply w-full mx-auto border-2 rounded-xl p-layout;
+
+	max-width: 500px;
+
+	.heading {
+		@apply text-center;
+	}
+
+	.form {
+		@apply flex flex-col gap-6 items-center;
+
+		.field {
+			@apply w-full;
+
+			label {
+				@apply text-md;
+			}
+
+			input {
+				@apply text-lg;
+			}
+
+			textarea {
+				@apply text-lg;
+			}
+
+			.radioGroup {
+				> div[role='radiogroup'] {
+					@apply flex flex-col gap-4;
+				}
+
+				.radioItem {
+					@apply flex gap-2;
+				}
+			}
+
+			.submitBtn {
+				@apply block cursor-pointer text-xl text-center;
+			}
+		}
+	}
 }

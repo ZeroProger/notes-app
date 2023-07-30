@@ -1,0 +1,8 @@
+.required {
+	&::after {
+		@apply ml-1;
+
+		content: '*';
+		color: red;
+	}
+}

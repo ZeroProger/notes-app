@@ -23,7 +23,7 @@ const gray800 = 'var(--bg-gray-800)'
 const backgroundLandscape = '#171b3d'
 
 module.exports = {
-	content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+	content: ['./src/screens/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
 	safelist: ['text-lg', 'text-xl', 'text-2xl', 'text-3xl'],
 	theme: {
 		colors: {
@@ -65,7 +65,7 @@ module.exports = {
 			md: { max: '900px' },
 			'md-min': { min: '900px' },
 			'md-header': { max: '768px' },
-			sm: { max: '600px' },
+			sm: { min: '600px' },
 			xs: { max: '500px' },
 		},
 		extend: {
