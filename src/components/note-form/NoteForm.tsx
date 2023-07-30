@@ -18,7 +18,9 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 			message: 'Заголовок должен быть минимум 5 символов в длину.',
 		}),
 		description: z.string().optional(),
-		priority: z.string({ required_error: 'Укажите приоритет' }),
+		priority: z.string({ required_error: 'Укажите приоритет' }).min(1, {
+			message: 'Укажите приоритет',
+		}),
 	})
 
 	type ZodNewNoteVM = z.infer<typeof formSchema>
@@ -27,8 +29,9 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 		handleSubmit,
 		control,
 		reset,
+		watch,
 		formState: { errors },
-	} = useForm<ZodNewNoteVM>({ mode: 'onBlur', resolver: zodResolver(formSchema) })
+	} = useForm<ZodNewNoteVM>({ mode: 'onChange', resolver: zodResolver(formSchema) })
 
 	const createMutation = useCreateNote()
 	const updateMutation = useUpdateNote()
@@ -78,7 +81,6 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					name="title"
 					control={control}
 					defaultValue={defaultNote?.title}
-					rules={{ required: { value: true, message: 'Обязательно' } }}
 					render={({ field }) => (
 						<Input {...field} type="text" id="title" placeholder="Заголовок" error={errors.title} />
 					)}
@@ -92,7 +94,6 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					name="description"
 					control={control}
 					defaultValue={defaultNote?.description}
-					rules={{ required: false }}
 					render={({ field }) => (
 						<Textarea
 							{...field}
@@ -111,12 +112,11 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					<Controller
 						name="priority"
 						control={control}
-						defaultValue={String(defaultNote?.priority)}
-						rules={{ required: true }}
+						defaultValue={defaultNote ? String(defaultNote.priority) : ''}
 						render={({ field }) => (
 							<RadioGroup
 								onValueChange={field.onChange}
-								defaultValue={String(field.value)}
+								defaultValue={field.value}
 								error={errors.priority}
 							>
 								<div className={styles.radioItem}>
@@ -155,6 +155,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					type="submit"
 					value={defaultNote ? 'Изменить' : 'Создать'}
 					className={styles.submitBtn}
+					onClick={() => console.log(watch('priority'))}
 				/>
 			</div>
 		</form>
