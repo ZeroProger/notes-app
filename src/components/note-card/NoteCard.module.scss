@@ -6,13 +6,16 @@
 	}
 
 	.title {
-		@apply text-xl;
 	}
 
 	.description {
 		@apply text-lg;
 
 		flex: 1 0 auto;
+	}
+
+	.date {
+		@apply text-lg;
 	}
 
 	.priority {

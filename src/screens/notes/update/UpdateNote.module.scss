@@ -1,0 +1,9 @@
+.container {
+	@apply w-full mx-auto border-2 rounded-xl p-layout;
+
+	max-width: 500px;
+
+	.heading {
+		@apply text-center;
+	}
+}

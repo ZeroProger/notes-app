@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import 'react-toastify/dist/ReactToastify.css'
 import './styles/index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { ReactQueryDevtools } from 'react-query/devtools'
 import { routes } from './config/react-router.config'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ToastContainer } from 'react-toastify'
@@ -37,7 +36,6 @@ root.render(
 				pauseOnHover
 				theme="dark"
 			/>
-			<ReactQueryDevtools />
 		</QueryClientProvider>
 	</React.StrictMode>
 )

@@ -16,6 +16,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '../../components/ui/alert-dialog/AlertDialog.tsx'
+import { twMerge } from 'tailwind-merge'
 
 export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: boolean }) {
 	const deleteMutation = useDeleteNote()
@@ -30,9 +31,18 @@ export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: bool
 		})
 	}
 
+	const dateFormatOptions: Intl.DateTimeFormatOptions = {
+		year: 'numeric',
+		month: 'short',
+		weekday: 'short',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+	}
+
 	return (
 		<div className={clsx(styles.noteCard, { [styles.miniCard]: isMain })}>
-			<h3 className={styles.title}>
+			<h3 className={twMerge(clsx('text-lg', { 'text-2xl': !isMain }))}>
 				{isMain && (
 					<div>
 						Название:
@@ -59,6 +69,24 @@ export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: bool
 				)}
 				<span className={`priority${note.priority}`}>{EPriority[note.priority]}</span>
 			</p>
+			{isMain && note.creationTime && (
+				<p className={styles.date}>
+					<div>
+						Дата создания:
+						<br />
+					</div>
+					{new Date(note.creationTime).toLocaleDateString('ru', dateFormatOptions)}
+				</p>
+			)}
+			{isMain && note.changeTime && (
+				<p className={styles.date}>
+					<div>
+						Дата изменения:
+						<br />
+					</div>
+					{new Date(note.changeTime).toLocaleDateString('ru', dateFormatOptions)}
+				</p>
+			)}
 			<div className={styles.actions}>
 				<Link to={NotesRouteUrls.updateNote(note.id)} className={styles.editBtn}>
 					Изменить
@@ -79,8 +107,10 @@ export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: bool
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
-								<AlertDialogCancel className="btn-default bg-lightGray">Отмена</AlertDialogCancel>
-								<AlertDialogAction className="btn-error" onClick={handleDeleteNote}>
+								<AlertDialogCancel className="btn-default bg-lightGray w-max">
+									Отмена
+								</AlertDialogCancel>
+								<AlertDialogAction className="btn-error w-max" onClick={handleDeleteNote}>
 									Удалить
 								</AlertDialogAction>
 							</AlertDialogFooter>

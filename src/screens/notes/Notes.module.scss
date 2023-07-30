@@ -18,3 +18,20 @@
 	.note {
 	}
 }
+
+.notesEmpty {
+	@apply w-full flex flex-col items-center justify-center text-4xl;
+
+	height: calc(100dvh - 150px);
+
+	@include md(lg, 'max') {
+		@apply text-3xl;
+	}
+
+	@include md(md, 'max') {
+		@apply text-2xl;
+	}
+}
+
+.notFound {
+}

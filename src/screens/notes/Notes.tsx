@@ -10,9 +10,10 @@ export function Notes() {
 
 	if (isLoading) return <Loading />
 
-	if (isError) return <div className={styles.notFound}>Ошибка: карточки не найдена.</div>
+	if (isError) return <div className={styles.notFound}>Ошибка: заметки не найдены.</div>
 
-	if (!notes) return <div className={styles.notFound}>Ошибка: карточки не найдена.</div>
+	if (!notes || notes.length === 0)
+		return <div className={styles.notesEmpty}>Пока не добавлено ни одной заметки</div>
 
 	return (
 		<div className={styles.notes}>

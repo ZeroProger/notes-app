@@ -1,6 +1,7 @@
 import { NotesService } from '../../services/notes.service'
 import { useQueryClient, useMutation, useQuery } from 'react-query'
 import { NewNoteVM } from '../../types'
+import { NotesRouteUrls } from '../../config/url.config'
 
 export function useFetchNotes() {
 	return useQuery(['notes'], () => NotesService.getNotes(), {
@@ -8,12 +9,19 @@ export function useFetchNotes() {
 	})
 }
 
+export function useFetchNote(noteId: string | undefined) {
+	return useQuery(['note', NotesRouteUrls.getNote(noteId!)], () => NotesService.getNote(noteId!), {
+		select: ({ data }) => data,
+		enabled: !!noteId,
+	})
+}
+
 export function useCreateNote() {
 	const queryClient = useQueryClient()
 
 	return useMutation(NotesService.createNote, {
-		onSettled: async () => {
-			queryClient.invalidateQueries(['notes'])
+		onSuccess: async () => {
+			await queryClient.invalidateQueries(['notes'])
 		},
 	})
 }
@@ -26,8 +34,9 @@ export function useUpdateNote() {
 			return NotesService.updateNote(data.id, data.dto)
 		},
 		{
-			onSettled: async () => {
-				await queryClient.invalidateQueries({ queryKey: ['notes'] })
+			onSuccess: async () => {
+				await queryClient.invalidateQueries(['notes'])
+				await queryClient.invalidateQueries(['note'])
 			},
 		}
 	)
@@ -37,8 +46,8 @@ export function useDeleteNote() {
 	const queryClient = useQueryClient()
 
 	return useMutation(NotesService.deleteNote, {
-		onSettled: async () => {
-			await queryClient.invalidateQueries({ queryKey: ['notes'] })
+		onSuccess: async () => {
+			await queryClient.invalidateQueries(['notes'])
 		},
 	})
 }
