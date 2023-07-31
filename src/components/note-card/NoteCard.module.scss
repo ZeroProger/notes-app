@@ -1,8 +1,14 @@
+@import '../../styles/mixins.scss';
+
 .noteCard {
 	@apply bg-backgroundLight p-4 flex flex-col gap-3 rounded-xl h-full;
 
 	&.miniCard {
 		@apply min-w-[400px];
+
+		@include md(md, 'max') {
+			@apply w-auto min-w-0;
+		}
 	}
 
 	.title {
