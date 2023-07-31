@@ -4,8 +4,9 @@ import { NotesPage } from '../routes/notes'
 import { CreateNotePage } from '../routes/notes/create'
 import { NotePage } from '../routes/notes/note'
 import { UpdateNotePage } from '../routes/notes/note/update'
-import { RootRoute } from '../routes'
-import { Error } from '../routes/error'
+import { HomePage } from '../routes/home'
+import { ErrorPage } from '../routes/error'
+import { LayoutPage } from '../routes/layout'
 
 export const RouterPaths = {
 	notes() {
@@ -28,9 +29,13 @@ export const RouterPaths = {
 export const routes: RouteObject[] = [
 	{
 		path: '/',
-		element: <RootRoute />,
-		errorElement: <Error />,
+		element: <LayoutPage />,
+		errorElement: <ErrorPage />,
 		children: [
+			{
+				index: true,
+				element: <HomePage />,
+			},
 			{
 				path: RouterPaths.notes(),
 				element: <NotesPage />,

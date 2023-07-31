@@ -40,7 +40,7 @@
 .notesEmpty {
 	@apply w-full flex flex-col items-center justify-center text-4xl;
 
-	height: calc(100dvh - 150px);
+	height: calc(100dvh - 100px);
 
 	@include md(lg, 'max') {
 		@apply text-3xl;

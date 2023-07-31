@@ -1,21 +1,23 @@
+@import '../../styles/mixins.scss';
+
 .container {
-	@apply p-layout;
+	@apply w-full flex flex-col gap-8 items-center justify-center;
 
-	header {
-		nav {
-			@apply content-container;
+	height: calc(100dvh - 100px);
 
-			ul {
-				@apply flex flex-row gap-x-10 justify-center;
+	.title {
+		@apply text-5xl text-center;
 
-				li {
-					@apply text-2xl font-bold;
-				}
-			}
+		@include md(md, 'max') {
+			@apply text-4xl;
 		}
 	}
 
-	main {
-		@apply content-container pt-layout;
+	.description {
+		@apply text-3xl text-center;
+
+		@include md(md, 'max') {
+			@apply text-2xl;
+		}
 	}
 }
