@@ -15,7 +15,7 @@ export function SelectPriorityFilter() {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="text-xl">Приоритет</div>
+			<div className="text-xl text-center md:text-start">Приоритет</div>
 			<Select
 				onValueChange={(priority) => {
 					priority === '-1' ? setPriorityFilter(null) : setPriorityFilter(parseInt(priority))

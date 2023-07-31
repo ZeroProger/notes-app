@@ -62,11 +62,13 @@ module.exports = {
 			},
 		},
 		screens: {
-			md: { max: '900px' },
-			'md-min': { min: '900px' },
-			'md-header': { max: '768px' },
-			sm: { min: '600px' },
-			xs: { max: '500px' },
+			xs: { min: '420px' },
+			sm: { min: '660px' },
+			md: { min: '768px' },
+			lg: { min: '980px' },
+			xl: { min: '1280px' },
+			'2xl': { min: '1536px' },
+			'3xl': { min: '1920px' },
 		},
 		extend: {
 			spacing: {

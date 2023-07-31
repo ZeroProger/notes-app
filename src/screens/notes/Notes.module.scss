@@ -13,6 +13,12 @@
 		flex-basis: 300px;
 
 		@include md(lg, 'max') {
+			@apply flex-row gap-8 justify-center;
+			flex-basis: 0;
+		}
+
+		@include md(md, 'max') {
+			@apply flex flex-col gap-4;
 			flex-basis: 0;
 		}
 	}
