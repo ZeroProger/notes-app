@@ -44,6 +44,8 @@
 
 	@include md(lg, 'max') {
 		@apply text-3xl;
+
+		height: calc(100dvh - 200px);
 	}
 
 	@include md(md, 'max') {

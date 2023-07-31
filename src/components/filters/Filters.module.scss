@@ -11,7 +11,7 @@
 		@apply text-xl min-w-[150px] border-b-2 pb-3;
 
 		@include md(lg, 'max') {
-			@apply border-b-0 pb-0;
+			@apply border-b-0 pb-0 min-w-[125px];
 		}
 	}
 

@@ -1,8 +1,14 @@
+@import '../../styles/mixins.scss';
+
 .container {
 	@apply flex flex-col items-center justify-center;
 
 	width: 100%;
 	height: calc(100dvh - 100px);
+
+	@include md(md, 'max') {
+		height: calc(100dvh - 200px);
+	}
 
 	.loader {
 		font-size: 10px;
