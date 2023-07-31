@@ -5,6 +5,10 @@
 
 	height: calc(100dvh - 100px);
 
+	@include md(md, 'max') {
+		height: calc(100dvh - 200px);
+	}
+
 	.title {
 		@apply text-5xl text-center;
 

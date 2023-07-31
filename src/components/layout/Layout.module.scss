@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .container {
 	@apply p-layout;
 
@@ -6,10 +8,22 @@
 			@apply content-container;
 
 			ul {
-				@apply flex flex-row gap-x-10 justify-center;
+				@apply flex flex-row gap-x-10 justify-center items-center;
+
+				@include md(md, 'max') {
+					@apply gap-x-8;
+				}
+
+				@include md(md, 'max') {
+					@apply flex-col gap-y-4;
+				}
 
 				li {
 					@apply text-2xl font-bold;
+
+					@include md(md, 'max') {
+						@apply text-xl;
+					}
 				}
 			}
 		}
@@ -19,5 +33,9 @@
 		@apply content-container pt-layout;
 
 		height: calc(100dvh - 100px);
+
+		@include md(md, 'max') {
+			height: calc(100dvh - 200px);
+		}
 	}
 }
