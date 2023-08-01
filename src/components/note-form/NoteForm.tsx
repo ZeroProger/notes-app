@@ -11,6 +11,7 @@ import { NotesRouteUrls } from '../../config/url.config'
 import { toast } from 'react-toastify'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { PRIORITY_TO_READ } from '../../config/constants'
 
 export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 	const formSchema = zod.object({
@@ -125,28 +126,32 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 							>
 								<div className={styles.radioItem}>
 									<RadioGroupItem
-										value="0"
+										value={String(EPriority.Low)}
 										id="priority-0"
 										className="text-primary border-primary"
 									/>
 									<Label htmlFor="priority-0" className="text-primary">
-										{EPriority[0]}
+										{PRIORITY_TO_READ[EPriority.Low]}
 									</Label>
 								</div>
 								<div className={styles.radioItem}>
 									<RadioGroupItem
-										value="1"
+										value={String(EPriority.Medium)}
 										id="priority-1"
 										className="text-yellow-700 border-yellow-700"
 									/>
 									<Label htmlFor="priority-1" className="text-yellow-700">
-										{EPriority[1]}
+										{PRIORITY_TO_READ[EPriority.Medium]}
 									</Label>
 								</div>
 								<div className={styles.radioItem}>
-									<RadioGroupItem value="2" id="priority-2" className="text-error border-error" />
+									<RadioGroupItem
+										value={String(EPriority.High)}
+										id="priority-2"
+										className="text-error border-error"
+									/>
 									<Label htmlFor="priority-2" className="text-error">
-										{EPriority[2]}
+										{PRIORITY_TO_READ[EPriority.High]}
 									</Label>
 								</div>
 							</RadioGroup>
