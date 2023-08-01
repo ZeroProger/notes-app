@@ -3,6 +3,8 @@ import { NoteCard } from '../../components/note-card/NoteCard'
 import styles from './Note.module.scss'
 import { useFetchNote } from '../../queries/notes'
 import { useParams } from 'react-router-dom'
+import { Error } from '../../components/error/Error'
+import { NotFound } from '../../components/not-found/NotFound'
 
 export function Note() {
 	const { noteId } = useParams()
@@ -10,9 +12,9 @@ export function Note() {
 
 	if (isLoading) return <Loading />
 
-	if (isError) return <div className={styles.notFound}>Ошибка: заметка не найдена.</div>
+	if (isError) return <Error message="Ошибка: заметка не найдена." />
 
-	if (!note) return <div className={styles.notFound}>Ошибка: заметка не найдена.</div>
+	if (!note) return <NotFound message="Заметка не найдена." />
 
 	return (
 		<div className={styles.note}>

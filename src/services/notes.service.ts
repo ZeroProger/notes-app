@@ -1,4 +1,4 @@
-import { axiosClassic } from '../api/interceptors'
+import { axiosClassic } from '../api/config'
 import { NotesApiUrls } from '../config/api.config'
 import { NewNoteVM, NoteVM } from 'types'
 

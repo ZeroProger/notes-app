@@ -13,6 +13,8 @@
 	--hover: #f74343;
 	--hover-error: #dc0909;
 	--toastify-color-dark: #2b2f31;
+	--min-header-height: 100px;
+	--max-header-height: 200px;
 }
 
 *,

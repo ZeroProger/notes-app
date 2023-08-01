@@ -41,23 +41,12 @@
 		.note {
 		}
 	}
-}
 
-.notesEmpty {
-	@apply w-full flex flex-col items-center justify-center text-4xl;
+	.notesEmpty {
+		@apply w-full flex flex-row items-center justify-center text-3xl;
 
-	height: calc(100dvh - 100px);
-
-	@include md(lg, 'max') {
-		@apply text-3xl;
-
-		height: calc(100dvh - 200px);
+		@include md(md, 'max') {
+			@apply text-2xl;
+		}
 	}
-
-	@include md(md, 'max') {
-		@apply text-2xl;
-	}
-}
-
-.notFound {
 }

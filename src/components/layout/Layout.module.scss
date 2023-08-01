@@ -32,10 +32,10 @@
 	main {
 		@apply content-container pt-layout;
 
-		height: calc(100dvh - 100px);
+		height: calc(100dvh - var(--min-header-height));
 
 		@include md(md, 'max') {
-			height: calc(100dvh - 200px);
+			height: calc(100dvh - var(--max-header-height));
 		}
 	}
 }

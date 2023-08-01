@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -7,7 +5,6 @@ import clsx from 'clsx'
 import styles from './Label.module.scss'
 import { twMerge } from 'tailwind-merge'
 import { FieldError } from 'react-hook-form'
-import { error } from 'console'
 
 const labelVariants = cva(
 	'text-sm font-medium inline-block leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'

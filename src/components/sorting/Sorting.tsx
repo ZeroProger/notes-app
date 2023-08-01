@@ -4,7 +4,7 @@ import styles from './Sorting.module.scss'
 export function Sorting() {
 	return (
 		<div className={styles.container}>
-			<span className={styles.heading}>Сортировка</span>
+			<p className={styles.heading}>Сортировка</p>
 			<div className={styles.sorts}>
 				<PrioritySorting />
 			</div>

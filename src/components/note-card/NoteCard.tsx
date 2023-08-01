@@ -17,6 +17,7 @@ import {
 	AlertDialogTrigger,
 } from '../../components/ui/alert-dialog/AlertDialog.tsx'
 import { twMerge } from 'tailwind-merge'
+import { PRIORITY_TO_READ } from '../../config/constants.ts'
 
 export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: boolean }) {
 	const deleteMutation = useDeleteNote()
@@ -24,7 +25,10 @@ export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: bool
 
 	const handleDeleteNote = () => {
 		deleteMutation.mutateAsync(note.id, {
-			onSettled: () => {
+			onError: () => {
+				toast.error('Ошибка удаления заметки')
+			},
+			onSuccess: () => {
 				toast.success('Заметка удалена')
 				navigate(NotesRouteUrls.getNotes())
 			},
@@ -40,52 +44,39 @@ export function NoteCard({ note, isMain = false }: { note: NoteVM; isMain?: bool
 		minute: '2-digit',
 	}
 
+	const formattedCreationTime = new Date(note.creationTime).toLocaleDateString(
+		'ru',
+		dateFormatOptions
+	)
+	const formattedChangeTime = new Date(note.changeTime).toLocaleDateString('ru', dateFormatOptions)
+
 	return (
 		<div className={clsx(styles.noteCard, { [styles.miniCard]: isMain })}>
-			<h3 className={twMerge(clsx('text-lg', { 'text-2xl': !isMain }))}>
-				{isMain && (
-					<div>
-						Название:
-						<br />
-					</div>
-				)}
-				{note.title}
-			</h3>
-			<p className={styles.description}>
-				{isMain && (
-					<div>
-						Описание:
-						<br />
-					</div>
-				)}
-				{note.description}
-			</p>
-			<p className={styles.priority}>
-				{isMain && (
-					<div>
-						Приоритет:
-						<br />
-					</div>
-				)}
-				<span className={`priority${note.priority}`}>{EPriority[note.priority]}</span>
-			</p>
-			{isMain && note.creationTime && (
-				<p className={styles.date}>
-					<div>
-						Дата создания:
-						<br />
-					</div>
-					{new Date(note.creationTime).toLocaleDateString('ru', dateFormatOptions)}
-				</p>
+			<div className={twMerge(clsx({ [styles.title]: true }, 'text-lg', { 'text-2xl': !isMain }))}>
+				{isMain && <p>Название:</p>}
+				<h3>{note.title}</h3>
+			</div>
+			<div className={styles.description}>
+				{isMain && <p>Описание:</p>}
+				<p>{note.description}</p>
+			</div>
+			<div className={styles.priority}>
+				{isMain && <p>Приоритет:</p>}
+				<span className={`priority${note.priority}`}>
+					{PRIORITY_TO_READ[note.priority as EPriority]}
+				</span>
+			</div>
+			{isMain && note.creationTime !== null && (
+				<div className={styles.date}>
+					<p>Дата создания:</p>
+					<span>{formattedCreationTime}</span>
+				</div>
 			)}
-			{isMain && note.changeTime && (
-				<p className={styles.date}>
-					<div>
-						Дата изменения:
-						<br />
-					</div>
-					{new Date(note.changeTime).toLocaleDateString('ru', dateFormatOptions)}
-				</p>
+			{isMain && note.changeTime !== null && (
+				<div className={styles.date}>
+					<p>Дата изменения:</p>
+					<span>{formattedChangeTime}</span>
+				</div>
 			)}
 			<div className={styles.actions}>
 				<Link to={NotesRouteUrls.updateNote(note.id)} className={styles.editBtn}>

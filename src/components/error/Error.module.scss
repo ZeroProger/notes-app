@@ -1,7 +1,7 @@
 @import '../../styles/mixins.scss';
 
 .container {
-	@apply w-full flex flex-col gap-8 items-center justify-center;
+	@apply w-full flex flex-col items-center justify-center;
 
 	height: calc(100dvh - var(--min-header-height));
 
@@ -9,16 +9,12 @@
 		height: calc(100dvh - var(--max-header-height));
 	}
 
-	.title {
-		@apply text-5xl text-center;
+	.text {
+		@apply text-4xl text-center;
 
-		@include md(md, 'max') {
-			@apply text-4xl;
+		@include md(lg, 'max') {
+			@apply text-3xl;
 		}
-	}
-
-	.description {
-		@apply text-3xl text-center;
 
 		@include md(md, 'max') {
 			@apply text-2xl;

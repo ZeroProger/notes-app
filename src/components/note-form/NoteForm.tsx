@@ -1,6 +1,6 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './NoteForm.module.scss'
-import { EPriority, NewNoteVM, NoteVM } from '../../types'
+import { EPriority, NoteVM } from '../../types'
 import { Label } from '../../components/ui/label/Label'
 import { Input } from '../../components/ui/input/Input'
 import { Textarea } from '../../components/ui/textarea/Textarea'
@@ -10,26 +10,24 @@ import { useNavigate } from 'react-router-dom'
 import { NotesRouteUrls } from '../../config/url.config'
 import { toast } from 'react-toastify'
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
+import * as zod from 'zod'
 
 export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
-	const formSchema = z.object({
-		title: z.string({ required_error: 'Укажите заголовок' }).min(5, {
+	const formSchema = zod.object({
+		title: zod.string({ required_error: 'Укажите заголовок' }).trim().min(5, {
 			message: 'Заголовок должен быть минимум 5 символов в длину.',
 		}),
-		description: z.string().optional(),
-		priority: z.string({ required_error: 'Укажите приоритет' }).min(1, {
+		description: zod.string().trim().optional(),
+		priority: zod.string({ required_error: 'Укажите приоритет' }).min(1, {
 			message: 'Укажите приоритет',
 		}),
 	})
 
-	type ZodNewNoteVM = z.infer<typeof formSchema>
+	type ZodNewNoteVM = zod.infer<typeof formSchema>
 
 	const {
 		handleSubmit,
 		control,
-		reset,
-		watch,
 		formState: { errors },
 	} = useForm<ZodNewNoteVM>({ mode: 'onChange', resolver: zodResolver(formSchema) })
 
@@ -38,7 +36,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 	const navigate = useNavigate()
 
 	const onSubmit: SubmitHandler<ZodNewNoteVM> = (data) => {
-		if (defaultNote) {
+		if (defaultNote !== undefined) {
 			updateMutation.mutateAsync(
 				{
 					id: defaultNote.id,
@@ -48,7 +46,10 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					},
 				},
 				{
-					onSettled: () => {
+					onError: () => {
+						toast.error('Ошибка изменения заметки')
+					},
+					onSuccess: () => {
 						toast.success('Заметка успешно изменена')
 						navigate(NotesRouteUrls.getNote(defaultNote.id))
 					},
@@ -63,7 +64,10 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 				priority: Number(data.priority),
 			},
 			{
-				onSettled: () => {
+				onError: () => {
+					toast.error('Ошибка создания заметки')
+				},
+				onSuccess: () => {
 					toast.success('Заметка успешно создана')
 					navigate(NotesRouteUrls.getNotes())
 				},
@@ -80,7 +84,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 				<Controller
 					name="title"
 					control={control}
-					defaultValue={defaultNote?.title}
+					defaultValue={defaultNote?.title || ''}
 					render={({ field }) => (
 						<Input {...field} type="text" id="title" placeholder="Заголовок" error={errors.title} />
 					)}
@@ -93,7 +97,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 				<Controller
 					name="description"
 					control={control}
-					defaultValue={defaultNote?.description}
+					defaultValue={defaultNote?.description || ''}
 					render={({ field }) => (
 						<Textarea
 							{...field}
@@ -112,7 +116,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 					<Controller
 						name="priority"
 						control={control}
-						defaultValue={defaultNote ? String(defaultNote.priority) : ''}
+						defaultValue={defaultNote !== undefined ? String(defaultNote.priority) : ''}
 						render={({ field }) => (
 							<RadioGroup
 								onValueChange={field.onChange}
@@ -153,9 +157,8 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 			<div className={styles.field}>
 				<Input
 					type="submit"
-					value={defaultNote ? 'Изменить' : 'Создать'}
+					value={defaultNote !== undefined ? 'Изменить' : 'Создать'}
 					className={styles.submitBtn}
-					onClick={() => console.log(watch('priority'))}
 				/>
 			</div>
 		</form>

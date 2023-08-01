@@ -1,5 +1,3 @@
-export type Nullable<T> = { [K in keyof T]: T[K] | null }
-
 export type NoteVM = {
 	id: number
 	title: string
@@ -16,15 +14,8 @@ export type NewNoteVM = {
 }
 
 export enum EPriority {
-	Низкий,
-	Средний,
-	Высокий,
+	Any = -1,
+	Low = 0,
+	Medium = 1,
+	High = 2,
 }
-
-export type ProblemDetails = Nullable<{
-	type: string
-	title: string
-	status: number
-	detail: string
-	instance: string
-}>

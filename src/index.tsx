@@ -6,6 +6,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { routes } from './config/react-router.config'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ToastContainer } from 'react-toastify'
+import {
+	queryStaleTime,
+	queryCacheTime,
+	queryRetryCount,
+	toastCloseTime,
+	queryRefetchInterval,
+} from './config/constants'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -14,19 +21,22 @@ const router = createBrowserRouter(routes)
 export const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
-			staleTime: 5 * 60 * 1000,
-			cacheTime: 5 * 60 * 1000,
+			staleTime: queryStaleTime,
+			cacheTime: queryCacheTime,
+			retry: queryRetryCount,
+			refetchInterval: queryRefetchInterval,
+			refetchOnWindowFocus: false,
 		},
 	},
 })
 
 root.render(
 	<React.StrictMode>
-		<QueryClientProvider client={queryClient} contextSharing>
+		<QueryClientProvider client={queryClient}>
 			<RouterProvider router={router} />
 			<ToastContainer
 				position="bottom-right"
-				autoClose={3000}
+				autoClose={toastCloseTime}
 				hideProgressBar={false}
 				newestOnTop={false}
 				closeOnClick

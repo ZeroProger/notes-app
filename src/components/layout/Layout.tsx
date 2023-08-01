@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { NotesRouteUrls } from '../../config/url.config'
 import styles from './Layout.module.scss'
 
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({ children }: PropsWithChildren) {
 	return (
 		<div className={styles.container}>
 			<header>

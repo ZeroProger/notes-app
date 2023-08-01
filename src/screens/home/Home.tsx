@@ -1,7 +1,4 @@
-import { PropsWithChildren } from 'react'
 import styles from './Home.module.scss'
-import { Link } from 'react-router-dom'
-import { NotesRouteUrls } from '../../config/url.config'
 
 export const Home = () => {
 	return (

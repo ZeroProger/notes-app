@@ -8,6 +8,8 @@ import { Filters } from '../../components/filters/Filters'
 import { createContext, useMemo, useState } from 'react'
 import { EPriority } from '../../types'
 import { Sorting } from '../../components/sorting/Sorting'
+import { Error } from '../../components/error/Error'
+import { NotFound } from '../../components/not-found/NotFound'
 
 export const FiltersContext = createContext<{
 	priorityFilter: EPriority | null
@@ -32,10 +34,14 @@ export function Notes() {
 
 	if (isLoading) return <Loading />
 
-	if (isError) return <div className={styles.notFound}>Ошибка: заметки не найдены.</div>
+	if (isError) return <Error message="Ошибка: заметки не найдены." />
 
-	if (!notes || notes.length === 0)
-		return <div className={styles.notesEmpty}>Пока не добавлено ни одной заметки</div>
+	if (notes === undefined || notes.length === 0)
+		return <NotFound message="Пока не добавлено ни одной заметки." />
+
+	const filteredNotes = notes
+		.filter((note) => (priorityFilter !== null ? note.priority === priorityFilter : note))
+		.sort((a, b) => (prioritySorting === 'asc' ? a.priority - b.priority : b.priority - a.priority))
 
 	return (
 		<FiltersContext.Provider value={providerValue}>
@@ -44,18 +50,17 @@ export function Notes() {
 					<Filters />
 					<Sorting />
 				</div>
-				<div className={styles.notes}>
-					{notes
-						.filter((note) => (priorityFilter !== null ? note.priority === priorityFilter : note))
-						.sort((a, b) =>
-							prioritySorting === 'asc' ? a.priority - b.priority : b.priority - a.priority
-						)
-						.map((note) => (
+				{filteredNotes.length === 0 ? (
+					<div className={styles.notesEmpty}>Заметки по данным фильтрам не найдены</div>
+				) : (
+					<div className={styles.notes}>
+						{filteredNotes.map((note) => (
 							<Link to={NotesRouteUrls.getNote(note.id)} key={note.id} className={styles.note}>
 								<NoteCard note={note} />
 							</Link>
 						))}
-				</div>
+					</div>
+				)}
 			</div>
 		</FiltersContext.Provider>
 	)
