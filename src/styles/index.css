@@ -32,3 +32,40 @@ body {
 	font-size: 1rem;
 	font-family: 'Nunito', sans-serif;
 }
+
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #666666 transparent;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+	width: 8px;
+	width: 8px;
+}
+*::-webkit-scrollbar-track {
+	border-radius: 16px;
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar-track:hover {
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar-track:active {
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	border-radius: 16px;
+	background-color: #666666;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background-color: #999999;
+}
+
+*::-webkit-scrollbar-thumb:active {
+	background-color: #999999;
+}
