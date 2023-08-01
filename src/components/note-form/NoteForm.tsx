@@ -104,6 +104,7 @@ export function NoteForm({ defaultNote }: { defaultNote?: NoteVM }) {
 							{...field}
 							id="description"
 							placeholder="Описание"
+							className="resize-none min-h-[150px]"
 							error={errors.description}
 						/>
 					)}
